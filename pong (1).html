@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <style>
+
+        body{
+            margin: 0px;
+        }
+
+        .fond{
+            margin: auto;
+            margin-top: 200px;
+            position: relative ;
+            background-color: black;
+            height: 0px;
+            width: 0px;
+        }
+        .ball{
+            background-color: seagreen;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            top: 0px;
+            left: 0px;
+            position: absolute;
+        }
+        .racket{
+            background-color: red;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            top: 0px;
+            left: 0px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="fond">
+        <div class="racket"></div>
+        <div class="ball"></div>
+    </div>
+
+    <script>
+        //background
+        var fond = document.querySelector('.fond');
+        var hauteur = 600;
+        var grosseur = 1000;
+        fond.style.height = hauteur + "px";
+        fond.style.width = grosseur + "px";
+
+        //ball
+        var ball = document.querySelector('.ball');
+        var ballsize = 50;
+        ball.style.height = ballsize + "px";
+        ball.style.width = ballsize + "px";
+        ball.style.borderRadius = ballsize/2 + "px";
+
+        var ballposx = grosseur/2 - ballsize/2;
+        var ballposy = hauteur/2 - ballsize/2;
+        var ballspeedx = 5;
+        var ballspeedy = 5;
+        ball.style.top = ballposy + "px";
+        ball.style.left = ballposx + "px";
+
+        //racket
+        var racket = document.querySelector('.racket');
+        var racketsize = 50;
+        var rackethaut = 100;
+        var raclarge = 25;
+        var racketvelocity = 0;
+        racket.style.height = rackethaut + "px";
+        racket.style.width = raclarge + "px";
+        racket.style.borderRadius = racketsize/2 + "px";
+
+        var racketposx = racketsize/2;
+        var racketposy = hauteur/2 - rackethaut;
+        racket.style.top = racketposy + "px";
+        racket.style.left = racketposx + "px";
+
+        function game(){
+
+            ballposx += ballspeedx;
+            ball.style.left = ballposx + "px";
+            ballposy += ballspeedy;
+            ball.style.top = ballposy + "px";
+            racketposy += racketvelocity;
+            racket.style.top = racketposy + "px";
+            if(ballposy + ballsize > hauteur || ballposy < 0){
+                ballspeedy = ballspeedy*-1;
+            }
+            if(ballposx + ballsize > grosseur  || ballposx < 0){
+                ballspeedx = ballspeedx*-1;
+            }
+            if(ballposx < racketposx + raclarge && ballposy + ballsize > racketposy && ballposy < racketposy + rackethaut){
+                ballspeedx = ballspeedx*-1;
+                ballposx = racketposx + raclarge;
+            }
+            if(racketposy < 0){
+                racketposy = 0;
+            }
+            if(racketposy + rackethaut > hauteur){
+                racketposy = hauteur - rackethaut;
+            }
+            
+            setTimeout(game, 10)
+        }
+        game();
+
+
+        document.addEventListener('keypress', function(e) {
+            var bonjour;
+            if((e.keyCode == 113) && racketposy < hauteur - rackethaut) {
+                //alert('You')
+                //racketposy += 10
+                //racket.style.top = racketposy + "px";
+                racketvelocity = 4
+
+            }
+            if((e.keyCode == 97)){
+                //alert('je')
+                //racketposy -= 10
+                //racket.style.top = racketposy + "px";   && racketposy > 0
+                racketvelocity = -4
+            }
+
+            }, false);
+
+    </script>
+
+</body>
+</html>

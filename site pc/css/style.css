@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300&display=swap');
+
+html{
+	scroll-behavior: smooth;
+}
+
+body{
+	font-family: 'Londrina Solid', cursive;
+	margin: 0 auto;
+}
+
+/* page de bienvenue (landing-page) */
+
+/* menu de navigation */
+
+h1.big-title{
+	color: white;
+	font-size: 80px;
+	margin-top: 125px;
+	padding-left: 25px;
+}
+
+h3.TITRE{
+	font-weight: 100;
+}
+
+nav.menu-nav{
+	display: flex;
+	color: seagreen;
+	list-style: none;
+	margin-left: 90px;
+	margin-left: 50px;
+	width: 400px;
+	justify-content: space-between;
+	align-items: center;
+
+}
+
+a.scroll{
+	color: white;
+	text-decoration: none;
+	align-content: center;
+	margin-left: 45%;
+	padding: 15px 20px;
+	position: absolute;
+	bottom: 160px;
+	background-color: teal;
+	border-radius: 15px;
+	transition: 0.2s;
+}
+
+a.scroll:hover {
+	transform: scale(1.05);
+}
+
+
+header.header{
+	display: flex;
+	align-items: center;
+
+	/* background-color: seagreen; */
+}
+
+section.top-page{
+	background: url('../images/background.jpg');
+	background-size: cover;
+	height: 100vh;
+	/* question pour lundi */
+	/* padding: 25px; */
+	padding-left: 25px;
+
+}
+
+section.top-page-hardware{
+	background: url('../images/abstract-wallpaper-hd-4k-23.jpg');
+	background-size: cover;
+	height: 100vh;
+	/* question pour lundi */
+	/* padding: 25px; */
+	padding-left: 25px;
+
+}
+
+nav.menu-nav li a{
+	text-decoration: none;
+	color: white;
+}
+
+nav.menu-nav :hover a{
+	color:cornflowerblue;
+	/* width: 50px;														CIC		ICI ICI CIC
+	height: 7px;
+	bottom: 0; */
+	transition: 0.3s all;
+}
+
+/* Fin du header */
+/* debut de la section "NOS SERVICE" */
+
+.btntop {
+    height: 75px;
+    width: 75px;
+    background: cadetblue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
+}
+
+
+section.service{
+	display: flex;
+	justify-content: space-between;
+	margin: 150px;
+	margin-bottom: 250px;
+}
+
+.service-item{
+	display: flex;
+	flex-direction: column;
+	background-color: whitesmoke;
+	padding-bottom: 50px;
+	padding-left: 50px;
+	border: 25px;
+	border: 50px;
+	padding-right: 50px;
+	padding-top: 50px;
+	box-shadow: 6px 2px 18px 2px rgba(0, 0, 0, 0.23);
+	margin-top: 125px;
+	margin-bottom: 20vh;
+}
+
+.delivery-icon{
+	/* font-size: 50px; */
+	/* color: #d72631; */
+	color: #a2d5c6;
+}
+
+h2.nos_service{
+	padding-left: 45%;
+	background-color: teal;
+	margin-top: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.img{
+	padding-left: 20%;
+}
+
+
+
+div.exemple{
+	margin-left: 50px;
+}
+
+
+/* Fin de la section "NOS SERVICE" */
+/* Debut de la section " Quel PC choisir ? " */
+
+div.ligne{
+	color: teal;
+}
+
+h1.titre_PC{
+	font-size: 35px;
+	text-align: center;
+}
+
+/* PC PORTABLE */
+.TEXTPCP{
+	margin-left: 1050px;
+	font-size: 20px;
+}
+
+.PCPIMG{
+	margin-left: 500px;
+}
+
+/* PC TOUR */
+
+.PCTIMG{
+	margin-right: 400px;
+}
+
+.TEXTPCT{
+	margin-left: 500px;
+	font-size: 20px;
+}
+
+/* Fin de la section " Quel PC choisir ? " */
+
+/* PAGE2 NOS PC */
+body.body-pc{
+	background-color: cadetblue;
+}
+
+.btnAccueil{
+	margin-left: 1250px;
+	border-right: 75px;
+	background-color: teal;
+	border: none;
+	border-radius: 15px;
+	padding-left: 15px;
+	color: rgb(0, 80, 80);
+	font-size: 25px;
+}
+
+.btnA{
+	text-decoration: none;
+}
+
+.Nos_pc{
+	margin-left: 50px;
+}
+
+h1.titre_nos_pc{
+	font-size: 50px;
+	font-weight: 100;
+	position: relative;
+	margin-left: 50px;
+}
+
+h1.titre_nos_pc::before{
+	content: "";
+	position: absolute;
+	background-color: teal;
+	width: 50px;
+	height: 7px;
+	bottom: 0;
+}
+
+.nos_pc_vente{
+	background-color: white;
+	min-height: 400px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.pc-box{
+	position: relative;
+	/* background-size: cover; */
+	min-width: 350px;
+	height: 350px; /*  ou 500px */
+	background-repeat: no-repeat;
+	/* flex: 1; */
+	margin-left: 75px;
+
+}
+
+.pc1 {
+	background-image: url('../images/Nos_PC/ldlc_pc_portable.jpg');
+}
+
+.pc2 {
+	background-image: url('../images/Nos_PC/ldlcpcp333.jpg');
+}
+
+.pc3 {
+	background-image: url('../images/Nos_PC/ldlcpcp2.jpg');
+
+}
+
+.pc4 {
+	background-image: url('../images/Nos_PC/msipc4.jpg');
+}
+
+.pc5{
+	background-image: url('../images/Nos_PC/ldlcpct2.jpg');
+}
+
+.pc6{
+	background-image: url('../images/Nos_PC/ldlcpctour.jpg');
+}
+
+.pc7{
+	background-image: url('../images/Nos_PC/ldlcpct5.jpg');
+}
+
+.pc8{
+	background-image: url('../images/Nos_PC/ldlcpct1.jpg');
+}
+
+.pc-details {
+	position: absolute;
+	width: 95%;
+	bottom: 0;
+	background-color: rgba(100, 149, 237, 0.5); /* un arrière plan bleu à 50% de transparence */
+	padding: 5px 20px 1px;
+}
+
+.pc-name{
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 10px;
+	color: cadetblue;
+}
+
+.pc-price{
+	color: cornflowerblue;
+	font-weight: 800;
+	font-size: 15px;
+	line-height: 3px;
+}
+
+/* DEBUT DU FOOTER */
+
+footer.footer{
+	text-align: center;
+}
+
+
+a.top {
+	position:fixed;
+	text-align: right;
+ }
+
+
+
+/*.menu-nav li a{ 
+	padding: 10px 10px;
+	color: seagreen;
+	background-color: whitesmoke;
+	border-radius: 15px;
+}
+
+.menu-nav li{
+	display: inline;
+}
+
+ul{
+	padding-left: 0px;
+}
+
+.button {
+	background-color: seagreen;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 6px 2px 20px 4px rgba(0, 0, 0, 0.25);
+	color: whitesmoke;
+	cursor: pointer;
+	font-family: unset;
+	font-size: 1em;
+	padding: 15px;
+	transition: 0.2s;
+	border-left: 50px;
+	text-decoration: none;
+}
+
+.button:hover {
+	box-shadow: 6px 2px 25px 5px rgba(0, 0, 0, 0.18);
+	transform: scale(1.01);
+}
+
+.button:active {
+	box-shadow: 6px 2px 18px 2px rgba(0, 0, 0, 0.23);
+	transform: scale(0.98);
+	background-color: darkgreen;
+}
+
+input.search{
+	margin: 8px 20px;
+	padding: 15px;
+	border-radius: 30px;
+	border:none;
+	background-color: white;
+	outline:none;
+}
+
+p.cadi{
+	margin-top: 0%;
+	margin-bottom: 0%;
+}
+
+a.fa-shopping-cart:before{
+
+}
+
+div.card{
+	background-color: whitesmoke;
+	box-shadow: 6px 2px 18px 2px rgba(0, 0, 0, 0.23);
+	border: 50px;
+	padding-right: 25px;
+	padding-top: 25px;
+	border: 25px;
+	padding-bottom: 25px;
+	padding-left: 25px;
+	margin-left: 15px;
+	margin-top: 15px;
+}
+
+div.cards{
+	display:flex;
+	flex-wrap:wrap;
+}
+
+h3.price{
+	margin-bottom: 60px;
+}
+
+h4.prixhtva{
+	margin-bottom: 10px;
+}
+
+h4.title1{
+	margin-bottom: 25px;
+}*/

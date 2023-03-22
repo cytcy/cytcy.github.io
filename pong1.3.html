@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <style>
+
+        body{
+            /* margin: 0px; */
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+        }
+
+        .fond{
+            margin: auto;
+            margin-top: 100px;
+            position: relative;
+            background-color: black;
+            height: 0px;
+            width: 0px;
+        }
+        .ball{
+            background-color: seagreen;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            top: 0px;
+            left: 0px;
+            position: absolute;
+        }
+        .racket{
+            background-color: blue;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            top: 0px;
+            left: 0px;
+            position: absolute;
+        }
+        .racket2{
+            background-color: red;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            top: 0px;
+            left: 0px;
+            position: absolute;
+        }
+        .pointj1{
+            margin-left: 250px;
+            margin-top: 10px;
+            color: blue;
+            font-size: 50px;
+            position: absolute;
+        }
+        .pointj2{
+            margin-left: 750px;
+            margin-top: 10px;
+            color: red;
+            font-size: 50px;
+            position: absolute;
+        }
+        .start{
+            margin-left: 500px;
+            color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1 class="pointj1"></h1> -->
+    <h1 class="start"></h1>
+    <!-- <h1 class="pointj2"></h1> -->
+    <div class="fond">
+        <h1 class="pointj1">0</h1>
+        <h1 class="pointj2">0</h1>
+        <div class="ball"></div>
+        <div class="racket"></div>
+        <div class="racket2"></div>
+    </div>
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        
+        Swal.fire({
+        title: 'Voulez vous avoir un tutoriel ?',
+        text: "(il est indispensable pour apprendre les touche de deplacement)",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OUI',
+        cancelButtonText: 'NON'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                position: 'middle',
+                // icon: 'success',
+                title: 'NE TOUCHER RIEN',
+                text: 'nous préparons le tuto..',
+                showConfirmButton: false,
+                timer: 2500
+                }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    Swal.fire({
+                    position: 'top-start',
+                    icon: 'success',
+                    title: 'Touche du Joueur 1',
+                    text: 'Monter : A || Descendre : Q',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    }).then((result) => {
+                    if (result.isConfirmed){
+                        Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Touche du Joueur 2',
+                        text: 'Monter : P || Descendre : M',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#d33',
+                        }).then((result) => {
+                            if (result.isConfirmed){
+                                Swal.fire({
+                                    position: 'middle',
+                                    icon: 'error',
+                                    title: 'Si vous voulez quitté',
+                                    text: 'Appuiez sur la touche C de votre clavier',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#32CD32',
+                                }).then((result) => {
+                                if (result.isConfirmed){
+                                    Swal.fire({
+                                    position: 'middle',
+                                    icon: 'success',
+                                    title: 'Le tuto est maintenant terminé',
+                                    text: 'Bon jeu a vous !',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#32CD32',
+                                    })
+                                }
+                                })
+                            }
+                            
+                        })
+                    }
+                    })
+                }
+                })
+                
+            
+            
+                
+            } else {
+                Swal.fire({
+                title: 'Bon jeu a vous !!!',
+                text: 'la partie commance..',
+                icon: 'warning',
+                width: 600,
+                padding: '3em',
+                color: '#716add',
+                background: '#fff url(/img/trees.png)',
+                backdrop: `
+                    rgba(0,0,123,0.4)
+                `
+                })
+            }
+        })
+
+        //STARTING
+        var startkey = document.querySelector('.start');
+        startkey.innerHTML = "APPUIE SUR ESPACE POUR DEMARRER";
+        
+
+        //background
+        var fond = document.querySelector('.fond');
+        var hauteur = 600;
+        var grosseur = 1000;
+        fond.style.height = hauteur + "px";
+        fond.style.width = grosseur + "px";
+
+        //ball
+        var ball = document.querySelector('.ball');
+        var ballsize = 50;
+        ball.style.height = ballsize + "px";
+        ball.style.width = ballsize + "px";
+        ball.style.borderRadius = ballsize/2 + "px";
+
+        var ballposx = grosseur/2 - ballsize/2;
+        var ballposy = hauteur/2 - ballsize/2;
+        var ballspeedx = 5;
+        var ballspeedy = 5;
+        ball.style.top = ballposy + "px";
+        ball.style.left = ballposx + "px";
+
+        //racket
+        var racket = document.querySelector('.racket');
+        var racketsize = 50;
+        var rackethaut = 100;
+        var raclarge = 25;
+        var racketvelocity = 0;
+        racket.style.height = rackethaut + "px";
+        racket.style.width = raclarge + "px";
+        racket.style.borderRadius = racketsize/2 + "px";
+
+        var racketposx = racketsize/2;
+        var racketposy = hauteur/2 - rackethaut/2;
+        racket.style.top = racketposy + "px";
+        racket.style.left = racketposx + "px";
+
+        //racket2
+        var racket2 = document.querySelector('.racket2');
+        var racket2size = 50;
+        var racket2haut = 100;
+        var rac2large = 25;
+        var racket2velocity = 0;
+        racket2.style.height = racket2haut + "px";
+        racket2.style.width = rac2large + "px";
+        racket2.style.borderRadius = racket2size/2 + "px";
+
+        var racket2posx = grosseur - racket2size;
+        var racket2posy = hauteur/2 - racket2haut/2;
+        racket2.style.top = racket2posy + "px";
+        racket2.style.left = racket2posx + "px";
+
+        //VARIABLE DES POINT
+        var pointJ1 = 0;
+        var pointJ2 = 0;
+
+        //POINT JOUEUR 1
+        var scoreJ1 = document.querySelector('.pointj1');
+
+
+        //POINT JOUEUR 2
+        var scoreJ2 = document.querySelector('.pointj2');
+
+        //BONUS VITESSE RACKETS
+        // if(pointJ1 >= 5){
+        //     racketvelocity = 6;
+        //     startkey.innerHTML = "boost de vitesse activé pour la racket 1";
+        // }
+        // if(pointJ2 >= 5){
+        //     racket2velocity = 6;
+        //     startkey.innerHTML = "boost de vitesse activé pour la racket 2";
+        // }
+
+        function game(){
+
+            //ball
+            ballposx += ballspeedx;
+            ball.style.left = ballposx + "px";
+            ballposy += ballspeedy;
+            ball.style.top = ballposy + "px";
+
+
+            //racket 1
+            racketposy += racketvelocity;
+            racket.style.top = racketposy + "px";
+
+
+            //racket 2
+            racket2posy += racket2velocity;
+            racket2.style.top = racket2posy + "px";
+
+            //IF BALL
+            if(ballposy + ballsize > hauteur || ballposy < 0){
+                ballspeedy = ballspeedy*-1;
+            }
+            if(ballposx + ballsize > grosseur || ballposx < 0){
+                if(ballposx < 0){
+                    //alert("JOUEUR 2 gagne");
+                    pointJ2++;
+                    //alert(pointJ2);
+                    scoreJ2.innerHTML = pointJ2;
+                }
+                if(ballposx + ballsize > grosseur){
+                    //alert("JOUEUR 1 gagne");
+                    pointJ1++;
+                    //alert(pointJ1);
+                    scoreJ1.innerHTML = pointJ1;
+                }
+                
+                ballposx = grosseur/2 - ballsize/2;
+                ballposy = hauteur/2 - ballsize/2;
+            }
+
+            //if ball racket 1
+            if(ballposx < racketposx + raclarge && ballposy + ballsize > racketposy && ballposy < racketposy + rackethaut){
+                ballspeedx = ballspeedx*-1;
+                ballposx = racketposx + raclarge;
+            }
+
+            //if ball racket 2 // A FAIRE LA DEMAIN
+            if(ballposx + ballsize > racket2posx && ballposy + ballsize > racket2posy && ballposy < racket2posy + racket2haut){
+                ballspeedx = ballspeedx*-1;
+                ballposx = racket2posx - rac2large*2;
+            }
+            
+
+
+
+            //IF RACKET 1
+            if(racketposy < 0){
+                racketposy = 0;
+            }
+            if(racketposy + rackethaut > hauteur){
+                racketposy = hauteur - rackethaut;
+            }
+
+            //IF RACKET 2
+            if(racket2posy < 0){
+                racket2posy = 0;
+            }
+            if(racket2posy + racket2haut > hauteur){
+                racket2posy = hauteur - racket2haut;
+            }
+
+            if(pointJ1 >= 10){
+                //alert("1 gagne")
+                startkey.innerHTML = "LE JOUEUR 1 A GAGNER LA PARTIE <br> appuie sur R pour reset la partie";
+                //window.location.reload;
+                ballposx = grosseur/2 - ballsize/2;
+                ballposy = hauteur/2 - ballsize/2;
+            }
+            if(pointJ2 >= 10){
+                //alert("2 gagne")
+                startkey.innerHTML = "LE JOUEUR 2 A GAGNER LA PARTIE <br> appuie sur R pour reset la partie";
+                ballposx = grosseur/2 - ballsize/2;
+                ballposy = hauteur/2 - ballsize/2;
+            }
+            
+            setTimeout(game, 10);
+        }
+        //game();
+        
+        document.addEventListener('keydown', function(e) {
+
+			//Key for racket 1
+			if(e.keyCode == 97 || e.keyCode == 65){
+				racketvelocity = -4;
+			}
+			if(e.keyCode == 113 || e.keyCode == 81){
+				racketvelocity = 4;
+			}
+
+            //Key for racket 2
+            if(e.keyCode == 109 || e.keyCode == 77){
+				racket2velocity = 4;
+			}
+			if(e.keyCode == 80 || e.keyCode == 112){
+				racket2velocity = -4;
+			}
+            if(e.keyCode == 32){
+                startkey.innerHTML = "";
+                game();
+			}
+            if(e.keyCode == 99 || e.keyCode == 67){
+                Swal.fire({
+                title: '<strong>Voulez vous <u>QUITTER </u>?</strong>',
+                icon: 'error',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText:
+                    'QUITTER',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText:
+                    'RESTER',
+                cancelButtonAriaLabel: 'Thumbs down',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#32CD32',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    alert("Merci de votre venue sur le site web");
+                    window.close();
+                }else{
+                    ballposx = ballposx;
+                    ballposy = ballposy;
+                    alert("reprenons");
+                }
+				
+			        
+                })
+            }
+            if(e.keyCode == 82 || e.keyCode == 114){
+				Swal.fire({
+                title: '<strong>Voulez vous <u>RELOAD </u>?</strong>',
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText:
+                    'Recomencer',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText:
+                    'Annuler',
+                cancelButtonAriaLabel: 'Thumbs down',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#32CD32',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    position: 'middle',
+                    title: 'RECONSTRUCTION DU PONG..',
+                    showConfirmButton: false,
+                    timer: 2500
+                    }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        ballposx = ballposx;
+                        ballposy = ballposy;
+                        pointJ1 = 0;
+                        pointJ2 = 0;
+                        scoreJ1.innerHTML = pointJ1;
+                        scoreJ2.innerHTML = pointJ2;
+                        startkey.innerHTML = "";
+                    }
+                })
+                }else{
+                    // ballposx = ballposx;
+                    // ballposy = ballposy;
+                    // alert("redfsprenons");
+                }
+				
+			        
+                })
+			}
+            
+            
+
+		}, false);
+	    document.addEventListener('keyup', function(e) {
+			
+            //Key for racket 1
+			if(e.keyCode == 97 || e.keyCode == 65){
+				racketvelocity = 0;
+			}
+			if(e.keyCode == 113 || e.keyCode == 81){
+				racketvelocity = 0;
+			}
+
+            //Key for racket 2
+            if(e.keyCode == 80 || e.keyCode == 112){
+				racket2velocity = 0;
+			}
+			if(e.keyCode == 109 || e.keyCode == 77){
+				racket2velocity = 0;
+			}
+		}, false);
+
+
+        
+       
+	
+
+
+    </script>
+
+</body>
+</html>

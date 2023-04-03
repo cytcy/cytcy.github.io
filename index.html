@@ -25,11 +25,18 @@
         <br/>
         <h2>Site Web : </h2>
         <br/>
+        <A HREF="javascript:AccesProtege()">Texte du lien</A></P>
         <a href="./site pc/index.html">Cyrtech<a/> 
             
             <?php
 echo "My first PHP script!";
 ?>
+            
+            <SCRIPT>
+function AccesProtege() {
+	self.location.href=prompt("Mot de passe :","") + ".html";
+	}
+</SCRIPT>
 
     </main>
 </body>

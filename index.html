@@ -21,13 +21,20 @@
         <h2>CyTcyFlag : </h2>
         <br/>
 	<a href="#">CyTcyFlag</a> : <p>Pour rentrer dans le CTF (Cytcy The Flag) il y a deja un CTF</p> <br/>
-	<a class="Ind1">Indice </a>
 
-  <script>
-    var indice = document.querySelector(".Ind1");
-    indice = document.createElement("p")
-    indice = document.textContent("aaaaaaaaaaaaaaaaaaaaa")
+  <head>
+  <script type="text/javascript">
+  function OnOff() {
+  if (document.getElementById("le_texte").style.display == "block")
+  document.getElementById("le_texte").style.display = "none";
+  else
+  document.getElementById("le_texte").style.display = "block";
+  }
   </script>
+  </head>
+  ...
+  <span id="le_texte" style="display:none;">Le fichier se trouve dans ctf/1/a</span><br/>
+  <input type="button" value="Indice" onclick="OnOff();">
         <br/>
         <br/>
         <h2>Site Web : </h2>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatal Gaming</title>
+    <style>
+        body{
+            background-color: rgb(56, 52, 52);
+        }
+        h1{
+            color: red;
+        }
+        h3{
+            color: green;
+        }
+        button{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fatal Gaming</h1>
+
+    <h3>le jeu s'appelle <em>Fatal Gaming</em></h3>
+    <h3>Entre donc le nom du jeu dans mots de passe (sans espace ni majuscule)</h3>
+
+    <button onclick="AccesProtege()">mots de passe</button>
+
+
+    <script>
+
+
+    function AccesProtege() {
+        self.location.href=prompt("Mot de passe :","") + ".html";
+        }
+    </script>
+
+</body>
+</html>

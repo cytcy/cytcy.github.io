@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>splice</title>
+    <style>
+        body {
+            margin: 0px;
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .fond {
+            top: 0px;
+            left: 0px;
+            position: relative;
+            background-color: #2c3e50;
+            height: 0px;
+            width: 0px;
+            /* box-shadow: 10px 20px 30px 5px blue; */
+            align-items: center;
+        }
+
+        .fond div {
+            position: absolute;
+            border-width: 2px;
+            border-color: #2c3e50;
+            border-style: solid;
+            background-color: #e74c3c;
+            /* width: 37px;
+            height: 37px; */
+            align-items: center;
+        }
+
+        .ball {
+            background-color: #e74c3c;
+            border-radius: 25px;
+            z-index: 7;
+            width: 43.5px;
+            height: 43.5px;
+            top: 0px;
+            left: 0px;
+        }
+
+        .startstop {
+            padding-left: 65px;
+        }
+
+        .classement {
+            padding-left: 750px;
+            flex: auto;
+        }
+
+        .foo {
+            padding-top: 750px;
+        }
+
+        .tabscore {
+            padding-left: 750px;
+            margin-top: 150px;
+            flex: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="startstop"></h1>
+    <div id="timer"></div>
+    <div id="timerr"></div>
+    <div class="fond">
+        <div class="ball"></div>
+    </div>
+
+    <h2 class="tabscore">Tableau des score :</h2>
+
+
+    <div class="classement">
+
+    </div>
+
+    <!--<textarea id="text">
+            Welcome to GeeksforGeeks
+        </textarea>
+        <br/>
+        <input type="button" id="btn" 
+               value="Download" />
+        <script>
+           function download(file, text) {
+             
+               //creating an invisible element
+               var element = document.createElement('a');
+               element.setAttribute('href', 
+               'data:text/plain;charset=utf-8, '
+               + encodeURIComponent(text));
+               element.setAttribute('download', file);
+             
+               // Above code is equivalent to
+               // <a href="path of file" download="file name">
+             
+               document.body.appendChild(element);
+             
+               //onClick property
+               element.click();
+             
+               document.body.removeChild(element);
+           }
+             
+           // Start file download.
+           document.getElementById("btn")
+           .addEventListener("click", function() {
+               // Generate download of hello.txt 
+               // file with some content
+               var text = "bonsuurrrr";
+               var filename = "GFG.txt";
+             
+               download(filename, text);
+           }, false);
+        </script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        //largeur et hauteur des cases
+        var caselarg = 87, casehaut = 87;
+        //possition en x et en y de la balle
+        var ballposx = 0, ballposy = 0;
+        //position de depart de la ball en x et en y
+        //variable de creation des div
+        var startballx, startbally, newDiv, ballrestart, name;
+        var score = 0, vie = 3;
+        var espacebol = true, next = false, dontMove = false, namefind = false, wonn = false, gameO = false, veriftitle = false, boltime = true, gostart = false, ballcar = false, zqsd = false;
+        var niv = 0;
+        var time = 60;
+        var arrayname = [];
+        var total = [];
+        var loop = 0;
+        var tempo = [];
+
+
+        var ball = document.querySelector('.ball');
+        var title = document.querySelector('.startstop');
+
+        //background
+        var fond = document.querySelector('.fond');
+        var classementScore = document.querySelector('.classement');
+        // var hauteur = 600;
+        // var largeur = 1000;
+        // fond.style.height = hauteur + "px";
+        // fond.style.width = largeur + "px";
+
+
+        // const numRows = 5; // Nombre de lignes dans la matrice
+        // const numCols = 5; // Nombre de colonnes dans la matrice
+
+        // // Initialisation de la matrice avec des valeurs aléatoires entre 0 et 9
+        // const matrixx = [];
+        // for (let i = 0; i < numRows; i++) {
+        //     const row = [];
+        //     for (let j = 0; j < numCols; j++) {
+        //         row.push(Math.floor(Math.random() * 10)); // Ajoute une valeur aléatoire à la ligne
+        //     }
+        //     matrixx.push(row); // Ajoute la ligne à la matrice
+        // }
+
+        // console.log(matrixx); // Affiche la matrice dans la console
+
+
+        //TABLEAU MATRIX
+        var level01 = [
+            [4, 3, 3, 4, 3, 3, 4],
+            [1, 0, 1, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 0, 2, 0, 0, 1]
+        ];
+        var level02 = [
+            [4, 3, 4, 0, 0, 0, 0],
+            [1, 0, 1, 0, 0, 0, 3],
+            [0, 0, 0, 1, 1, 0, 1],
+            [0, 1, 0, 0, 0, 1, 0],
+            [4, 1, 1, 1, 0, 0, 0],
+            [1, 0, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 2]
+        ];
+        var level03 = [
+            [0, 2, 0, 1, 1, 4, 0],
+            [1, 0, 1, 0, 0, 1, 0],
+            [1, 0, 0, 1, 0, 0, 0],
+            [3, 1, 0, 0, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+            [3, 3, 3, 1, 3, 0, 3]
+        ];
+        var level04 = [
+            [0, 0, 3, 1, 0, 0, 0],
+            [0, 1, 1, 1, 4, 1, 0],
+            [0, 0, 0, 1, 1, 0, 0],
+            [1, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 0, 0],
+            [2, 1, 1, 1, 0, 1, 0]
+        ];
+        var level05 = [
+            [3, 0, 0, 1, 0, 0, 4],
+            [0, 0, 1, 0, 1, 0, 0],
+            [0, 1, 1, 0, 1, 1, 0],
+            [0, 0, 0, 2, 0, 0, 0],
+            [0, 1, 1, 0, 1, 1, 0],
+            [0, 0, 1, 0, 1, 0, 0],
+            [3, 0, 0, 1, 0, 0, 3]
+        ];
+        var level06 = [
+            [2, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 0, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 0],
+            [3, 0, 0, 0, 0, 0, 0]
+        ];
+        var level07 = [
+            [4, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 1, 0, 1, 1, 0],
+            [0, 1, 0, 0, 0, 1, 0],
+            [1, 0, 0, 1, 0, 1, 0],
+            [2, 0, 1, 0, 0, 0, 0]
+        ];
+        var matrix = [
+            [4, 3, 3, 4, 3, 3, 4],
+            [0, 0, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 0, 2, 0, 0, 1]
+        ];
+
+        var matrice = [level01, level02, level03, level04, level05, level06, level07];
+
+        function firststart() {
+            console.log("Game started");
+            name = prompt("Quel est votre pseudo ?", "Quel est votre pseudo ?");
+            while (name == "" || name.length >= 20) { // METTRE UN NB MAX DE LETTRE : OK
+                name = prompt("Quel est votre pseudo ? (merci de répécter 20 caractère max.)");
+            }
+
+            for (var i = 0; i < arrayname.length; i++) {
+                if (arrayname[i] == name) {
+                    namefind = true;
+                }
+            }
+            if (!namefind) {
+                arrayname.push(name);
+                namefind = false;
+            }
+
+            console.log(arrayname);
+            game();
+        }
+
+        firststart();
+
+        function game() {
+
+            fond.innerHTML = "<div class=\"ball\"></div>";
+            ball = document.querySelector('.ball');
+
+            title.innerHTML = name + ", vous avez " + vie + " vies";
+
+            for (var i = 0; i < matrix.length; i++) {
+                for (var j = 0; j < matrix[0].length; j++) {
+
+                    newDiv = document.createElement('div');
+                    newDiv.className = "divnum" + i + j;
+                    newDiv.style.left = i * caselarg + "px";
+                    newDiv.style.top = j * casehaut + "px";
+                    newDiv.style.width = caselarg + "px";
+                    newDiv.style.height = casehaut + "px";
+                    if (matrix[j][i] == 0) {
+                        newDiv.style.backgroundColor = "#2c3e50"
+                    }
+                    if (matrix[j][i] == 1) {
+                        newDiv.style.backgroundColor = "#ee5253"
+                    }
+                    if (matrix[j][i] == 2) {
+                        newDiv.style.backgroundColor = "#3498db"
+                        ballposx = i;
+                        ballposy = j;
+                        startballx = i;
+                        startbally = j;
+                    }
+                    if (matrix[j][i] == 3) {
+                        newDiv.style.backgroundColor = "#00cec9"
+                    }
+                    if (matrix[j][i] == 4) {
+                        newDiv.style.backgroundColor = "#feca57"
+                    }
+                    fond.appendChild(newDiv);
+
+                }
+
+            }
+
+            fond.style.left = caselarg / 4 + "px";
+            fond.style.top = casehaut / 4 + "px";
+            console.log("game : ok jeu start");
+        }
+
+
+
+
+        function showcase() {
+            for (var i = 0; i < matrix.length; i++) {
+                for (var j = 0; j < matrix[0].length; j++) {
+
+                    newDiv = document.createElement('div');
+                    newDiv.className = "divnum" + i + j;
+                    newDiv.style.left = i * caselarg + "px";
+                    newDiv.style.top = j * casehaut + "px";
+                    newDiv.style.width = caselarg + "px";
+                    newDiv.style.height = casehaut + "px";
+                    if (matrix[j][i] == 0) {
+                        newDiv.style.backgroundColor = "#2c3e50"
+                    }
+                    if (matrix[j][i] == 1) {
+                        newDiv.style.backgroundColor = "#2c3e50"
+                    }
+                    if (matrix[j][i] == 2) {
+                        newDiv.style.backgroundColor = "#3498db"
+                        ballposx = i;
+                        ballposy = j;
+                        startballx = i;
+                        startbally = j;
+                    }
+                    if (matrix[j][i] == 3) {
+                        newDiv.style.backgroundColor = "#00cec9"
+                    }
+                    if (matrix[j][i] == 4) {
+                        newDiv.style.backgroundColor = "#feca57"
+                    }
+                    fond.appendChild(newDiv);
+
+                }
+
+            }
+            console.log("showcase : ok");
+        }
+
+
+
+
+
+        document.addEventListener('keydown', function (e) {
+
+            // console.log("je seras sur : " + matrix[ballposy][ballposx - 1]);
+
+            if (gostart) {
+
+                //XXXXXX
+                if (e.keyCode == 37 || (e.keyCode == 81 && zqsd == true)) {
+                    if (ballposx == 0 || e.keyCode == 65) {
+                        ballposx == 0;
+                    }
+                    else if (matrix[ballposy][ballposx - 1] == 1) {
+                        console.log("je seras sur : " + matrix[ballposy][ballposx - 1]);
+                        vie--;
+                        returnToHome();
+                        viewcase();
+                    } else if (matrix[ballposy][ballposx - 1] == 3) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score++;
+                        niv++;
+                        ballposx--;
+                        next = true
+                        // alert(score)
+                    } else if (matrix[ballposy][ballposx - 1] == 4) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score += 2;
+                        niv++;
+                        ballposx--;
+                        next = true
+                        // alert(score)
+                    }
+                    else {
+                        ballposx--;
+                    }
+                }
+                if (e.keyCode == 39 || (e.keyCode == 68 && zqsd == true)) {
+                    if (ballposx == matrix.length - 1) {
+                        ballposx = matrix.length - 1;
+                    } else if (matrix[ballposy][ballposx + 1] == 1) {
+                        console.log("je seras sur : " + matrix[ballposy][ballposx + 1]);
+                        vie--;
+                        returnToHome();
+                        viewcase();
+                    } else if (matrix[ballposy][ballposx + 1] == 3) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score++;
+                        niv++;
+                        ballposx++;
+                        next = true
+                        // alert(score)
+                    } else if (matrix[ballposy][ballposx + 1] == 4) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score += 2;
+                        niv++;
+                        ballposx++;
+                        next = true
+                        // alert(score)
+                    }
+                    else {
+                        ballposx++;
+                    }
+                }
+
+                //YYY
+                if (e.keyCode == 40 || (e.keyCode == 83 && zqsd == true)) {
+                    if (ballposy == matrix.length - 1) {
+                        ballposy = matrix.length - 1;
+                    } else if (matrix[ballposy + 1][ballposx] == 1) {
+                        // console.log("je seras sur : " + matrix[ballposy + 1][ballposx]);
+                        vie--;
+                        returnToHome();
+                        viewcase();
+                    } else if (matrix[ballposy + 1][ballposx] == 3) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+
+                        score++;
+                        niv++;
+                        ballposy++;
+                        next = true;
+                        // alert(score)
+                    } else if (matrix[ballposy + 1][ballposx] == 4) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score += 2;
+                        niv++;
+                        ballposy++;
+                        next = true;
+                        // alert(score)
+                    }
+                    else {
+                        ballposy++;
+                    }
+                }
+                if (e.keyCode == 38 || (e.keyCode == 90 && zqsd == true)) {
+                    if (ballposy == 0) {
+                        ballposy = 0;
+                    } else if (matrix[ballposy - 1][ballposx] == 1) {
+                        console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        vie--;
+                        returnToHome();
+                        viewcase();
+                    } else if (matrix[ballposy - 1][ballposx] == 3) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score++;
+                        niv++;
+                        ballposy--;
+                        next = true
+                        // alert(score)
+                    } else if (matrix[ballposy - 1][ballposx] == 4) {
+                        // console.log("je seras sur : " + matrix[ballposy - 1][ballposx]);
+                        score += 2;
+                        niv++;
+                        ballposy--;
+                        next = true
+                        // alert(score)
+                    }
+                    else {
+                        ballposy--;
+                    }
+                }
+            }
+            if (e.keyCode == 32) {
+                if (espacebol) {
+                    title.innerHTML = "";
+                    game();
+                    espacebol = false;
+                }
+            }
+            if (e.keyCode == 54) {
+                alert("code de triche 1")
+                game();
+                time = 60;
+                boltime = true;
+            }
+            if (e.keyCode == 82 || e.keyCode == 52) {
+                restart();
+            }
+            if (e.keyCode == 27) {
+                firstParams();
+            }
+
+
+        }, false);
+
+        // document.addEventListener('keyup', function(e) {
+
+        //     //Key for racket 1
+        // 	if(e.keyCode == 37 || e.keyCode == 65){
+        // 		ballposx = 0;
+        //         // alert(ballvelocityx);
+        // 	}
+        //     if(e.keyCode == 39 || e.keyCode == 81){
+        //         ballposx = 0;
+        //     }
+
+        //     //Key for racket 2
+        //     if(e.keyCode == 40 || e.keyCode == 77){
+        //         ballposy = 0;
+        //     }
+        //     if(e.keyCode == 38 || e.keyCode == 112){
+        //         ballposy = 0;
+        //     }
+        // }, false);
+
+        // fond.addEventListener('click', function(e) {		
+
+        // e.target.style.backgroundColor = "blue"
+        // e.target.style.borderRadius = caselarg/2 + "px";
+        // }, false);
+
+        // var elemento = parseInt(prompt("pick a number" + " "), 10);
+        // alert(matrix.indexOf(1));
+
+        // var indices = [];
+        // var tableau = ['a', 'b', 'a', 'c', 'a', 'd'];
+        // var élément = 'a';
+        // var idx = tableau.indexOf(élément);
+        // while (idx != -1) {
+        //     indices.push(idx);
+        //     idx = tableau.indexOf(élément, idx + 1);
+        // }
+        // alert(indices);
+        // [0, 2, 4]
+
+
+
+        function drawBall() {
+            if (ballcar) {
+                ball.style.borderRadius = "5px";
+            }
+            ball.style.top = (ballposy * casehaut) + casehaut / 4 + "px";
+            ball.style.left = (ballposx * caselarg) + caselarg / 4 + "px";
+
+            if (dontMove == true) {
+                ball.style.top = (startbally * casehaut) + casehaut / 4 + "px";
+                ball.style.left = (startballx * caselarg) + caselarg / 4 + "px";
+            }
+
+            // console.log("x = " + ballposx);
+            // console.log("y = " + ballposy);
+
+            if (vie <= 0 && gameO == false) {
+                gameOver();
+                veriftitle = true;
+                title.innerHTML = "Fin du jeu, vous avez perdu ! :(";
+                gameO = true;
+                dontMove = true;
+                gostart = false;
+            } else if (!wonn && !veriftitle) {
+                title.innerHTML = name + ", vous avez " + vie + " vies et " + score + " points";
+                // clearTimeout(drawBall());
+            }
+            if (next) {
+                nextLevel();
+                next = false;
+                boltime = true;
+                time = 120;
+                gostart = false;
+            }
+
+            if (time <= 0 && boltime) {
+                showcase();
+                boltime = false;
+                gostart = true;
+            }
+
+            time--;
+
+
+
+            setTimeout(drawBall, 10);
+        }
+
+        function colision() {
+            if (ballposx < 0) {
+                ballposx = 0;
+            }
+            if (ballposy < 0) {
+                ballposy = 0;
+            }
+            if (ballposy > matrix.length - 1) {
+                ballposy = matrix.length - 1;
+            }
+            if (ballposx > matrix.length - 1) {
+                ballposx = matrix.length - 1;
+            }
+
+            // console.log(vie);
+
+
+            setTimeout(colision, 10);
+        }
+
+        function gameOver() {
+            addScore();
+            title.innerHTML = "Fin du jeu, vous avez perdu ! :(";
+            ball.style.top = (startbally * casehaut) + casehaut / 4 + "px";
+            ball.style.left = (startballx * caselarg) + caselarg / 4 + "px";
+            gameO = true;
+            dontMove = true;
+            gostart = false;
+            console.log("Fin de la game");
+        }
+
+        function nextLevel() {
+            if (matrice.length > niv) {
+                matrix = matrice[niv]
+                game();
+            } else {
+                won();
+            }
+            // alert(matrix);
+
+        }
+
+        function won() {
+            addScore();
+            wonn = true;
+            title.innerHTML = "Fin du jeu, vous avez GAGNER ! :)";
+            ball.style.top = (startbally * casehaut) + casehaut / 4 + "px";
+            ball.style.left = (startballx * caselarg) + caselarg / 4 + "px";
+            dontMove = true;
+        }
+
+        function restart() {
+            veriftitle = false;
+            loop++;
+            console.log("loop : " + loop)
+            tempo[0] = "nom : " + name;
+            tempo[1] = "niveau max : " + niv;
+            tempo[2] = "score : " + score;
+            tempo[3] = "vie : " + vie;
+            console.log(tempo)
+            //remplir le grand tableau
+            for (var i = 0; i < 3; i++) {
+                total.push(tempo[i]);
+                console.log(total)
+                console.log(total)
+            }
+            //vider le tableau temporaire
+            for (var y = 0; y <= tempo.length; y++) {
+                tempo.pop();
+                //alert("tempo pop : " + y)
+            }
+            niv = 0;
+            vie = 3;
+            score = 0;
+            matrix = matrice[niv]
+            dontMove = false;
+            firststart();
+            gostart = true;
+            gameO = false;
+        }
+
+
+        function returnToHome() {
+            ballposx = startballx;
+            ballposy = startbally;
+            ball.style.top = (startbally * casehaut) + casehaut / 4 + "px";
+            ball.style.left = (startballx * caselarg) + caselarg / 4 + "px";
+        }
+
+        function addScore() {
+            // crée un nouvel élément div
+            var newDiv = document.createElement("div");
+
+            var newContent = document.createTextNode(name + " a fait " + score + " points, et il lui reste " + vie + " vies.");
+            // ajoute le texte au nouveau div créé
+            newDiv.appendChild(newContent);
+            classementScore.appendChild(newDiv);
+        }
+
+        //A LA MORT VOIR UN PETIT PEUX LES MUR
+        function viewcase() {
+            if (vie > 0) {
+                game();
+                time = 12, 5;
+                boltime = true;
+            }
+
+        }
+
+
+        colision();
+
+        drawBall();
+
+        // anti F5 (refresh) demande d'autorisation
+        window.onbeforeunload = function () {
+            return "Vos modifications risquent de ne pas être enregistrées.";
+        }
+
+
+        //PARAMETRE
+
+        function firstParams() {
+
+            (async () => {
+
+                const { value: para } = await Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    title: 'Paramètre',
+                    input: 'select',
+                    inputOptions: {
+                        'balle': {
+                            color: 'couleur',
+                            shape: 'forme',
+                        },
+                        'jeu': {
+                            size: 'taille',
+                            key: 'touches',
+                        }
+                    },
+                    inputPlaceholder: 'Selctionne une option',
+                    showCancelButton: true,
+                    confirmButtonText: 'Envoyer',
+                    inputValidator: (value) => {
+                        return new Promise((resolve) => {
+                            if (value == 'color') {
+                                resolve();
+                                color();
+                            } else if (value == 'shape') {
+                                resolve();
+                                shape();
+                            } else if (value == 'size') {
+                                resolve();
+                                size();
+                            } else if (value == 'key') {
+                                resolve();
+                                key();
+                            }//SI aucune valeur est enregistré
+                            else {
+                                resolve('merci de bien vouloir séléctionner une valeur :)');
+                            }
+                        })
+                    }
+                })
+
+
+            })()
+        }
+
+        function color() {
+            (async () => {
+
+                const { value: color } = await Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    title: 'Paramètre : couleur',
+                    input: 'select',
+                    inputOptions: {
+                        'couleur de la balle': {
+                            rouge: 'rouge',
+                            bleu: 'bleu',
+                            vert: 'vert',
+                            jaune: 'jaune',
+                            defaut: 'par défaut'
+                        },
+                    },
+                    inputPlaceholder: 'Selctionne une forme',
+                    showCancelButton: true,
+                    confirmButtonText: 'Envoyer',
+                    inputValidator: (value) => {
+                        return new Promise((resolve) => {
+                            if (value == 'rouge') {
+                                resolve();
+                                ball.style.backgroundColor = "#d63031";
+                            } else if (value == 'bleu') {
+                                resolve();
+                                ball.style.backgroundColor = "#0984e3";
+                            } else if (value == 'vert') {
+                                resolve();
+                                ball.style.backgroundColor = "#00b894";
+                            } else if (value == 'jaune') {
+                                resolve();
+                                ball.style.backgroundColor = "#ffeaa7";
+                            } else if (value == 'defaut') {
+                                resolve();
+                                ball.style.backgroundColor = "#e74c3c";
+                            }//SI aucune valeur est enregistré
+                            else {
+                                resolve('merci de bien vouloir séléctionner une valeur :)');
+                            }
+                        })
+                    }
+                })
+
+
+                if (color) {
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'couleur selectionné : ' + color
+                    })
+                }
+
+
+            })()
+        }
+
+        function size() {
+
+            (async () => {
+
+                const { value: size } = await Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    title: 'Paramètre : Tailles',
+                    input: 'select',
+                    inputOptions: {
+                        'taille du jeu': {
+                            petit: 'Petit',
+                            moyen: 'Moyen',
+                            grand: 'Grand',
+                            defaut: 'par défaut'
+                        },
+                    },
+                    inputPlaceholder: 'Selctionne une taille',
+                    showCancelButton: true,
+                    confirmButtonText: 'Envoyer',
+                    inputValidator: (value) => {
+                        return new Promise((resolve) => {
+                            if (value == 'petit') {
+                                resolve();
+                                caselarg = 75;
+                                casehaut = 75;
+                                ball.style.height = "37px";
+                                ball.style.width = "37px";
+                                restart();
+                            } else if (value == 'moyen') {
+                                resolve();
+                                caselarg = 87;
+                                casehaut = 87;
+                                ball.style.height = "43px";
+                                ball.style.width = "43px";
+                                restart();
+                            } else if (value == 'grand') {
+                                resolve();
+                                caselarg = 100;
+                                casehaut = 100;
+                                ball.style.borderRadius = "25px";
+                                ball.style.height = "50px";
+                                ball.style.width = "50px";
+                                restart();
+                            } else if (value == 'defaut') {
+                                resolve();
+                                caselarg = 87;
+                                casehaut = 87;
+                                ball.style.borderRadius = "25px";
+                                restart();
+                            }//SI aucune valeur est enregistré
+                            else {
+                                resolve('merci de bien vouloir séléctionner une taille :)');
+                            }
+                        })
+                    }
+                })
+                //SI une valeur est enregistré
+                if (size) {
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'taille selectionné : ' + size
+                    })
+                }
+
+
+            })()
+        }
+
+
+        function shape() {
+            (async () => {
+
+                const { value: shape } = await Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    title: 'Paramètre : Formes',
+                    input: 'select',
+                    inputOptions: {
+                        'balle': {
+                            rond: 'rond',
+                            carre: 'carré',
+                        },
+                    },
+                    inputPlaceholder: 'Selctionne une forme',
+                    showCancelButton: true,
+                    confirmButtonText: 'Envoyer',
+                    inputValidator: (value) => {
+                        return new Promise((resolve) => {
+                            if (value == 'rond') {
+                                resolve();
+                                ballcar = false;
+                                ball.style.borderRadius = "25px"
+                            } else if (value == 'carre') {
+                                resolve();
+                                ballcar = true;
+                            }//SI aucune valeur est enregistré
+                            else {
+                                resolve('merci de bien vouloir séléctionner une valeur :)');
+                            }
+                        })
+                    }
+                })
+
+
+                if (shape) {
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'forme selectionné : ' + shape
+                    })
+                }
+
+
+            })()
+        }
+
+        function key() {
+            Swal.fire({
+                title: 'voulez vous jouer avec les touches zqsd ?',
+                toast: true,
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Oui',
+                denyButtonText: `non`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'touche zqsd ajouté !!'
+                    })
+                    zqsd = true;
+                } else if (result.isDenied) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'touche zqsd enlevée !!'
+                    })
+                    zqsd = false;
+                }
+            })
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

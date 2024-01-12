@@ -1,3 +1,4 @@
+chrome://apps/?showDeletionDialog=blpcfgokakmgnkcojhhkbfbldkacnbeo
 package monde;
 
 public class Ville {
@@ -99,3 +100,38 @@ public class Ville {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+package monde;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Ville ville = new Ville();
+		Ville ville1 = new Ville("Waremme", 123456789, "Belgique", "europe");
+		ville1.description();
+		System.out.println(ville1.getGrade());
+	}
+
+}
+

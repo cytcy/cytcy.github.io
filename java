@@ -1,0 +1,101 @@
+package monde;
+
+public class Ville {
+	private String nomVille;
+	private String nomPays;
+	private String continent;
+	private int nbrHabitants;
+	private String grade;
+	private static int nbrVille = 0;
+
+	public Ville() {
+		System.out.println("Création d'une ville !");
+		nomVille = "Inconnu";
+		nomPays = "Inconnu";
+		nbrHabitants = 0;
+		continent = "Inconnu";
+		grade = "Inconnu";
+		nbrVille++;
+	}
+
+	public Ville(String pNom, int pNbre, String pPays, String pContinent) {
+		System.out.println("Création d'une ville avec des paramètre !");
+		nomVille = pNom;
+		nomPays = pPays;
+		nbrHabitants = pNbre;
+		continent = pContinent;
+		this.grade();
+		nbrVille++;
+	}
+
+	// ********** ACCESSEURS ************
+	// Retourne le nom de la ville
+	public String getNom() {
+		return nomVille;
+	}
+
+	// Retourne le nom de la pays
+	public String getNomPays() {
+		return nomPays;
+	}
+
+	// Retourne le nombre d'habitants
+	public int getNombreHabitants() {
+		return nbrHabitants;
+	}
+	
+	// Retourne le nombre d'habitants
+		public int getNombreVille() {
+			return nbrVille;
+		}
+
+	// Retourne le nombre d'habitants
+	public String getContinent() {
+		return continent;
+	}
+
+	// Retourne le grade
+	public String getGrade() {
+		return grade;
+	}
+
+	// ************* MUTATEURS *************
+	// Définit le nom de la ville
+	public void setNom(String pNom) {
+		nomVille = pNom;
+	}
+
+	// Définit le nom du pays
+	public void setNomPays(String pPays) {
+		nomPays = pPays;
+	}
+
+	// Définit le nombre d'habitants
+	public void setNombreHabitants(int pNbre) {
+		nbrHabitants = pNbre;
+		grade();
+	}
+
+	// Définit le nom du pays
+	public void setContinent(String pContinent) {
+		continent = pContinent;
+	}
+
+	// *******************METHODE*************************
+
+	public void description() {
+		System.out.println(nomVille + " est une ville de " + nbrHabitants + " habitants, situé en " + nomPays
+				+ " dans le continent " + continent);
+	}
+
+	private void grade() {
+		if (nbrHabitants >= 10000) {
+			grade = "classe A";
+		} else if (nbrHabitants >= 1000) {
+			grade = "classe B";
+		} else {
+			grade = "classe C";
+		}
+	}
+
+}

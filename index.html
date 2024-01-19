@@ -32,6 +32,47 @@
 
   <head>
   <script type="text/javascript">
+    Swal.fire({
+                title: 'voulez vous jouer avec la nouvelle interface ?',
+                toast: true,
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Oui',
+                denyButtonText: `non`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+                    window.location.href = 'https://cytcy.github.io/nouvelle-int';
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Nouvelle Interfce !!'
+                    })
+                    
+                } else if (result.isDenied) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => { }
+                    })
+
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Ancienne Interface !!'
+                    })
+                    
+                }
+            })
+        }
   function OnOff() {
   if (document.getElementById("le_texte").style.display == "block")
   document.getElementById("le_texte").style.display = "none";

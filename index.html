@@ -32,6 +32,8 @@
 
   <head>
   <script type="text/javascript">
+    interface();
+    function interface() {
     Swal.fire({
                 title: 'voulez vous jouer avec la nouvelle interface ?',
                 toast: true,
@@ -73,6 +75,7 @@
                 }
             })
         }
+    
   function OnOff() {
   if (document.getElementById("le_texte").style.display == "block")
   document.getElementById("le_texte").style.display = "none";

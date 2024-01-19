@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CTF : accueil</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+header, footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #fff;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 2px solid #4CAF50; /* Bordure verte lors du survol */
+}
+
+.play-btn, .hint-btn {
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.play-btn:hover{
+    background-color: #45a049;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.hint-btn:hover {
+    background-color: #d4af37; /* Jaune foncé lors du survol */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.play-btn {
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hint-btn {
+    background-color: #fdd835; /* Jaune */
+    color: #000;
+}
+
+
+.input-section {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    padding: 15px 20px; /* Ajustez ces valeurs selon vos préférences */
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #45a049; /* Vert foncé lors du survol */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.submit-btn {
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    width: 100%;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CTF : Cytcy The Flag</h1>
+    </header>
+
+    <main>
+        
+
+
+            <div class="cards-container">
+                <div class="card">
+                    <h2>Capture the flag 1</h2>
+                    <p>je trouve vraiment l'image bizzard</p>
+                    <button class="play-btn" onclick="redirectTo('https://cytcy.github.io/ctf1.jpg')">Jouer</button>
+                    <button class="hint-btn" onclick="getHint('indice: En bas gauche')">Avoir un indice</button>
+                </div>
+    
+                <div class="card">
+                    <h2>CTF 2 : Les bases</h2>
+                    <p>Le fichier se trouve dans ctf/1/a/CTF JAVASCRIPT et </p> 
+                    <p> le nom du fichier est https://pastebin.com/aEWvK4Zi</p>
+                    <button class="play-btn" onclick="redirectTo('#Le bouton fonctionne')">Jouer</button>
+                    <button class="hint-btn" onclick="getHint('Indice: tout est dans la description')">Avoir un indice</button>
+                </div>
+                <div class="card">
+                    <h2>CyTcy Flag --</h2>
+                    <p>Tout est dans le titre !</p>
+                    <button class="play-btn" onclick="redirectTo('page2.html')">Play</button>
+                    <button class="hint-btn" onclick="getHint('indice : Souviens toi de se que tu as fait dans le cf2')">Avoir un indice</button>
+                </div>
+                <div class="card">
+                    <h2>CTF : CyTcy Flag #4</h2>
+                    <p>Clic sur le boutton pour jouer!</p>
+                    <button class="play-btn" onclick="redirectTo('page2.html')">Jouer</button>
+                    <button class="hint-btn" onclick="getHint('Hint: Il faaut aaller voir le code source en fesant F12 ou clic droit --> inspecter')">Avoir un indice</button>
+                </div>
+            </div>
+
+
+
+            <div class="form-container">
+                <div class="card">
+                    <h2>lien pour les ctf :</h2>
+                    <form id="answerForm">
+                        <button type="button" class="submit-btn" onclick="AccesProtegee()">Clic ici</button>
+                    </form>
+                </div>
+            </div>
+
+            <h2>Testeur de Flag</h2>
+
+            <div class="input-section">
+                <form id="answerForm">
+                    <input type="text" id="answerInput" placeholder="ACTUELEMENT INDISPONIBLE" />
+                    <button type="button" class="submit-btn" onclick="submitAnswer()">Tester</button>
+                </form>
+            </div>
+
+            <SCRIPT>
+                function AccesProtege() {
+                    self.location.href=prompt("Mot de passe :","") + ".html";
+                    }
+                function AccesProtegee() {
+                    self.location.href=prompt("lien des ctf :","") + ".html";
+                    }
+                </SCRIPT>
+
+            
+            
+            <!-- Liste des challenges à afficher -->
+       
+
+       
+            <!-- Tableau des scores à afficher -->
+       
+
+        <script>
+            function redirectTo(link) {
+    window.location.href = link;
+}
+
+function getHint(hint) {
+    alert(hint);
+}
+        </script>
+    
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CTF Cytcy The Flag</p>
+        <p>&copy; Developed by cytcy</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

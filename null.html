@@ -186,6 +186,16 @@ function getHint(hint) {
     alert(hint);
 }
         </script>
+        <script>
+        var body = document.querySelector('.body');
+        document.addEventListener('keydown', function (e) {
+            if (e.keyCode == 38 || e.keyCode == 82) {
+                redirectTo('nouvelle-int');
+            }
+
+
+}, false);
+    </script>
     
     </main>
 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CTF : accueil</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+header, footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #fff;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 2px solid #4CAF50; /* Bordure verte lors du survol */
+}
+
+.play-btn, .hint-btn {
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.play-btn:hover{
+    background-color: #45a049;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.hint-btn:hover {
+    background-color: #d4af37; /* Jaune foncé lors du survol */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.play-btn {
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hint-btn {
+    background-color: #fdd835; /* Jaune */
+    color: #000;
+}
+
+
+.input-section {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    padding: 15px 20px; /* Ajustez ces valeurs selon vos préférences */
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #45a049; /* Vert foncé lors du survol */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Accentuation de l'ombre lors du survol */
+}
+
+.submit-btn {
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    width: 100%;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CTF : Cytcy The Flag</h1>
+    </header>
+
+    <main>
+
+
+        <h2>Definitions d'un ctf</h2>
+
+        <p>Un ctf (Capture the flag) en français Capturer le drapeau consiste a trouver des "faille" dans le system pour trouver le drapeau</p>
+        <p>pour aller sur le ctf je vais te faire faire un petit "ctf"</p>
+        <h2>Ctf 0 :</h2>
+        <p>Pour pouvoir aller sur la page d'acueil des ctf tu doit rentrez un lien (en cliquant sur le bouton "Jouer")</p>
+        <p>dans la section pour rentrez le lien de l'accueil tu doit entré :</p>
+        <p>nouvelle-int</p>
+        <p>pourquoi tu doit entré ca ? parce que c'est le nom du fichier (retiens bien ca pour la suite)</p>
+        
+
+
+
+            <div class="form-container">
+                <div class="card">
+                    <h2>lien pour les ctf :</h2>
+                    <form id="answerForm">
+                        <button type="button" class="submit-btn" onclick="AccesProtegee()">Clic ici</button>
+                    </form>
+                </div>
+            </div>
+            
+            <p>pour tester les lien il y auras toujours cette carte avec le bouton (il se peux que la carte soit modifier par la suite)</p>
+
+            <SCRIPT>
+                
+                function AccesProtegee() {
+                    self.location.href=prompt("lien des ctf :","") + ".html";
+                    }
+                </SCRIPT>
+
+            
+            
+            <!-- Liste des challenges à afficher -->
+       
+
+       
+            <!-- Tableau des scores à afficher -->
+       
+
+        <script>
+            function redirectTo(link) {
+    window.location.href = link;
+}
+
+function getHint(hint) {
+    alert(hint);
+}
+        </script>
+    
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CTF Cytcy The Flag</p>
+        <p>&copy; Developed by cytcy</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rgb web</title>
+    <style>
+        .body{
+            background: red;
+        }
+    </style>
+</head>
+<body class="body">
+    
+
+    <script>
+        var body = document.querySelector('.body');
+        document.addEventListener('keydown', function (e) {
+
+            if (e.keyCode == 25 || e.keyCode == 69) {
+                body.style.backgroundColor = "#d63031";
+            }
+            if (e.keyCode == 38 || e.keyCode == 82) {
+                body.style.backgroundColor = "red";
+            }
+            if (e.keyCode == 22 || e.keyCode == 66) {
+                body.style.backgroundColor = "blue";
+            }
+            if (e.keyCode == 27 || e.keyCode == 71) {
+                body.style.backgroundColor = "green";
+            }
+            if (e.keyCode == 26 || e.keyCode == 70) {
+                body.style.backgroundColor = "seagreen";
+            }
+            if (e.keyCode == 45 || e.keyCode == 89) {
+                body.style.backgroundColor = "yellow";
+            }
+
+
+}, false);
+    </script>
+
+</body>
+</html>

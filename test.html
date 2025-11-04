@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéo Plein Écran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+        video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        #startButton {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            background: red;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        let videoStarted = false;
+
+        function startVideo() {
+            let video = document.getElementById("video");
+            let button = document.getElementById("startButton");
+            button.style.display = "none"; // Masquer le bouton
+            video.style.display = "block"; // Afficher la vidéo
+            video.volume = 1.0;
+            
+            // Définir la source de la vidéo depuis le lien
+            video.src = "https://saintlouisinformatique.be/cyrian/darlingInTheFranxx.webm";
+
+            video.play().catch(error => console.error("La lecture automatique a été bloquée.", error));
+
+            // Passer la vidéo en plein écran après qu'elle ait démarré
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.mozRequestFullScreen) {
+                video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+
+            videoStarted = true;
+        }
+
+        // Fonction qui gère le clic pour mettre la vidéo en plein écran et la remettre immédiatement en plein écran
+        function toggleFullscreen() {
+            let video = document.getElementById("video");
+
+            // Si la vidéo n'est pas encore en plein écran, la mettre en plein écran
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement) {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            }
+
+            // Une fois en plein écran, remettre la vidéo en plein écran immédiatement si elle ne l'est pas déjà
+            setTimeout(() => {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            }, 300); // Délai pour s'assurer que la vidéo a bien démarré en plein écran
+        }
+
+        // Ajouter des écouteurs d'événements pour gérer le clic sur la page
+        window.addEventListener('click', toggleFullscreen);
+
+        // Ajouter une confirmation avant de quitter la page qui boucle
+        window.onbeforeunload = function(e) {
+            if (videoStarted) {
+                let message = 'Voulez-vous vraiment quitter ? Cette action va recharger la page.';
+                e.returnValue = message; // Standard pour les navigateurs modernes
+                return message; // Certains navigateurs utilisent encore cette méthode
+            }
+        };
+    </script>
+</head>
+<body>
+    <button id="startButton" onclick="startVideo()">Démarrer la vidéo</button>
+    <video id="video" loop>
+        <!-- La source de la vidéo est définie dynamiquement via le script -->
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
+</body>
+</html>

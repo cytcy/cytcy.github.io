@@ -1,27 +1,22 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Son en boucle rapide</title>
-  <style>
-    body {
-      margin: 0;
-      background: blue;
-    }
-  </style>
-</head>
-<body>
-  <audio id="player" src="metal-pipe-clang.wav"></audio>
+<script>
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  <script>
-    // On va ignorer la balise audio de base et utiliser plusieurs instances
+  async function loadBuffer() {
+    const res = await fetch("metal-pipe-clang.wav");
+    const arrayBuffer = await res.arrayBuffer();
+    return await audioCtx.decodeAudioData(arrayBuffer);
+  }
 
-  // jouer 10 fois par seconde en superposant les sons
-  setInterval(() => {
-    const a = new Audio('metal-pipe-clang.wav');
-    a.volume = 1;
-    a.play().catch(() => {});
-  }, 100);
+  loadBuffer().then(buffer => {
+    setInterval(() => {
+      const src = audioCtx.createBufferSource();
+      src.buffer = buffer;
+      src.connect(audioCtx.destination);
+      src.start(0);
+    }, 100); // 10 fois par seconde
+  });
+
+  // Débloquer le contexte audio après interaction utilisateur
+  window.addEventListener("click", () => audioCtx.resume());
+  window.addEventListener("keydown", () => audioCtx.resume());
 </script>
-</body>
-</html>

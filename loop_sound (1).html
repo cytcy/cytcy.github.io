@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lecture en boucle</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:3rem;background:#0f172a;color:#e6eef8;display:flex;flex-direction:column;gap:1rem;align-items:center}
+    .card{background:rgba(255,255,255,0.03);padding:1.5rem;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.5);width:min(720px,95%)}
+    button{padding:.6rem 1rem;border-radius:8px;border:0;background:#2563eb;color:white;font-weight:600;cursor:pointer}
+    .muted-note{font-size:.9rem;opacity:.8}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Page de son en boucle</h1>
+    <p class="muted-note">Déposez votre fichier audio dans le même dossier que ce fichier HTML et renommez-le <code>sound.mp3</code>, ou modifiez l'attribut <code>src</code> ci-dessous.</p>
+
+    <!-- Balise audio: utilisez loop pour la lecture en boucle et controls pour afficher les contrôles natifs -->
+    <audio id="player" loop autoplay controls muted>
+      <source src="metal-pipe-clang.wav" type="audio/mpeg">
+      <!-- Si vous avez un .ogg, ajoutez une source supplémentaire -->
+      <!-- <source src="sound.ogg" type="audio/ogg"> -->
+      Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
+    <div style="margin-top:1rem;display:flex;gap:.6rem;align-items:center">
+      <button id="playBtn">Lecture (autoriser la lecture)</button>
+      <button id="pauseBtn">Pause</button>
+      <label style="display:flex;gap:.4rem;align-items:center;margin-left:8px">
+        <input type="checkbox" id="autoplayToggle"> Démarrer après interaction
+      </label>
+    </div>
+
+    <p class="muted-note" style="margin-top:1rem">Remarque : la plupart des navigateurs modernes bloquent la lecture automatique de l'audio non muet tant que l'utilisateur n'a pas interagi avec la page. Cliquez sur <strong>Lecture</strong> pour autoriser la lecture en boucle.</p>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const autoplayToggle = document.getElementById('autoplayToggle');
+
+    // Forcer la boucle (au cas où)
+    player.loop = true;
+
+    // Tenter lecture auto
+    window.addEventListener('load', () => {
+      player.muted = false; // réactiver le son après démarrage
+      player.play().catch(err => console.warn('Autoplay bloqué : interaction utilisateur requise', err));
+    });
+
+    // Option: démarrer automatiquement après la première interaction
+    let firstInteraction = false;
+    function startIfWanted() {
+      if (firstInteraction) return;
+      firstInteraction = true;
+      if (autoplayToggle.checked) {
+        player.play().catch(e => console.warn('Impossible de lancer automatiquement :', e));
+      }
+      // retire l'écouteur après la première interaction
+      window.removeEventListener('pointerdown', startIfWanted);
+      window.removeEventListener('keydown', startIfWanted);
+    }
+
+    window.addEventListener('pointerdown', startIfWanted);
+    window.addEventListener('keydown', startIfWanted);
+  </script>
+</body>
+</html>

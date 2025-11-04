@@ -1,22 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Superposition Audio WebAudio</title>
+  <style>
+    body {
+      margin: 0;
+      background: blue;
+    }
+  </style>
+</head>
+<body>
 <script>
+  // Nom du fichier audio (change ici)
+  const FILE = "metal-pipe-clang.wav"; // << change juste ce nom si besoin
+
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   async function loadBuffer() {
-    const res = await fetch("metal-pipe-clang.wav");
+    const res = await fetch(FILE);
     const arrayBuffer = await res.arrayBuffer();
     return await audioCtx.decodeAudioData(arrayBuffer);
   }
 
   loadBuffer().then(buffer => {
+    // 10 sons par seconde (100ms)
     setInterval(() => {
       const src = audioCtx.createBufferSource();
       src.buffer = buffer;
       src.connect(audioCtx.destination);
-      src.start(0);
-    }, 100); // 10 fois par seconde
+      src.start();
+    }, 100);
   });
 
-  // Débloquer le contexte audio après interaction utilisateur
-  window.addEventListener("click", () => audioCtx.resume());
-  window.addEventListener("keydown", () => audioCtx.resume());
+  // Nécessaire : débloquer audio sur interaction utilisateur
+  const unlock = () => audioCtx.resume();
+  window.addEventListener("click", unlock);
+  window.addEventListener("keydown", unlock);
 </script>
+</body>
+</html>

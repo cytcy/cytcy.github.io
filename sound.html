@@ -14,16 +14,14 @@
   <audio id="player" src="metal-pipe-clang.wav"></audio>
 
   <script>
-    const player = document.getElementById('player');
-    player.volume = 1;
-    player.loop = true;
+    // On va ignorer la balise audio de base et utiliser plusieurs instances
 
-    // jouer 10 fois par seconde
-    setInterval(() => {
-      // relancer le son à chaque tick
-      player.currentTime = 0;
-      player.play().catch(() => {});
-    }, 100);
-  </script>
+  // jouer 10 fois par seconde en superposant les sons
+  setInterval(() => {
+    const a = new Audio('sound.mp3');
+    a.volume = 1;
+    a.play().catch(() => {});
+  }, 100);
+</script>
 </body>
 </html>
